@@ -2,7 +2,13 @@
 
 ### Overview
 
-This is a simple Python Gradio based app that allows you to search your iMessage history using natural language.
+This is a simple Python Gradio based app that allows you to search your iMessage history using natural language. Messages are never sent to any inference servers or any servers through this script. iMessages are stored in a `chat.db` which can be queried with regular sqlite3, and this app will only use LLM to generate the query. It will run the query directly on your local machine.
+
+#### Assumptions
+
+- You are using a Mac
+- Your iMessage history is stored in `~/Library/Messages/chat.db`
+- You have an OpenRouter API key (see https://openrouter.ai)
 
 ### Installation
 
