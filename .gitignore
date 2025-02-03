@@ -3,3 +3,4 @@
 .gradio
 *.log
 *.log.*
+__pycache__

@@ -1,36 +1,27 @@
-import gradio as gr
-import json
-import pandas as pd
+import platform
+from dotenv import load_dotenv
+from os import getenv, path
+from ui import create_ui
+
+load_dotenv()
 
 
-def json_to_table(json_str):
-    try:
-        # Parse JSON string
-        data = json.loads(json_str)
+def check_compatibility():
+    if not platform.system() == "Darwin":
+        exit("This app is only compatible with macOS - exiting.")
 
-        # Convert to DataFrame
-        if isinstance(data, list):
-            df = pd.DataFrame(data)
-        elif isinstance(data, dict):
-            df = pd.DataFrame([data])
-        else:
-            return "Input must be a JSON object or array"
+    if not getenv("OPENROUTER_API_KEY"):
+        exit(
+            "Please set the OPENROUTER_API_KEY environment variable in an .env file in the root of the project - exiting."
+        )
 
-        return df
-    except json.JSONDecodeError:
-        return "Invalid JSON format"
-    except Exception as e:
-        return f"Error: {str(e)}"
+    if not path.exists(path.expanduser("~/Library/Messages/chat.db")):
+        exit(
+            "Please ensure that your iMessage history is stored in ~/Library/Messages/chat.db - exiting."
+        )
 
-
-# Create Gradio interface
-demo = gr.Interface(
-    fn=json_to_table,
-    inputs=gr.Textbox(label="Enter JSON", placeholder='{"name": "John", "age": 30}'),
-    outputs=gr.Dataframe(),
-    title="JSON to Table Converter",
-    description="Enter valid JSON to see it displayed as a table",
-)
 
 if __name__ == "__main__":
+    check_compatibility()
+    demo = create_ui()
     demo.launch()

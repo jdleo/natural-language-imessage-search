@@ -27,10 +27,16 @@ Create a `.env` file and add your OpenRouter API key:
 OPENROUTER_API_KEY=sk-or-v1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
+If you want to use another model (the default is `anthropic/claude-3.5-sonnet`), you can set the `MODEL` environment variable:
+
+```bash
+MODEL=openai/gpt-4o-mini
+```
+
 ### Usage
 
 ```bash
-python app.py
+sudo python app.py
 ```
 
 ### Demo
